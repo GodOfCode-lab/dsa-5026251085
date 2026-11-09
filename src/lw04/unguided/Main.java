@@ -67,8 +67,7 @@ public class Main {
             int result = findCard(cards, targets[i]);
 
             if (result != -1) {
-                System.out.println(
-                    targets[i] + ": FOUND at index " + result);
+                System.out.println(targets[i] + ": FOUND at index " + result);
             } else {
                 System.out.println(targets[i] + ": NOT FOUND");
             }
