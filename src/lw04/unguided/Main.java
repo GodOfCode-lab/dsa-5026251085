@@ -68,12 +68,9 @@ public class Main {
 
             if (result != -1) {
                 System.out.println(
-                    targets[i] + ": FOUND at index " + result
-                );
+                    targets[i] + ": FOUND at index " + result);
             } else {
-                System.out.println(
-                    targets[i] + ": NOT FOUND"
-                );
+                System.out.println(targets[i] + ": NOT FOUND");
             }
         }
     }
