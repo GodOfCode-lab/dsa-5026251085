@@ -1,25 +1,10 @@
 package lw06.prelab;
 
-import java.util.*;
+import java.util.Scanner;
 
 public class Main {
 
-    // Menyimpan hasil traversal
-    static StringBuilder output = new StringBuilder();
-
-    static class Node {
-        int data;
-        Node left;
-        Node right;
-
-        Node(int data) {
-            this.data = data;
-            this.left = null;
-            this.right = null;
-        }
-    }
-
-    static Node insert(Node root, int data) {
+    public static Node insert(Node root, int data) {
         if (root == null) {
             return new Node(data);
         }
@@ -33,97 +18,77 @@ public class Main {
         return root;
     }
 
-    static boolean search(Node root, int target) {
+    public static boolean search(Node root, int target) {
         if (root == null) {
             return false;
         }
 
         if (root.data == target) {
             return true;
-        }
-
-        if (target < root.data) {
+        } else if (target < root.data) {
             return search(root.left, target);
         } else {
             return search(root.right, target);
         }
     }
 
-    static void preorder(Node root) {
-        if (root == null) {
-            return;
+    public static void preorder(Node root) {
+        if (root != null) {
+            System.out.print(root.data + " ");
+            preorder(root.left);
+            preorder(root.right);
         }
-
-        output.append(root.data).append(" ");
-        preorder(root.left);
-        preorder(root.right);
     }
 
-    static void inorder(Node root) {
-        if (root == null) {
-            return;
+    public static void inorder(Node root) {
+        if (root != null) {
+            inorder(root.left);
+            System.out.print(root.data + " ");
+            inorder(root.right);
         }
-
-        inorder(root.left);
-        output.append(root.data).append(" ");
-        inorder(root.right);
     }
 
-    static void postorder(Node root) {
-        if (root == null) {
-            return;
+    public static void postorder(Node root) {
+        if (root != null) {
+            postorder(root.left);
+            postorder(root.right);
+            System.out.print(root.data + " ");
         }
-
-        postorder(root.left);
-        postorder(root.right);
-        output.append(root.data).append(" ");
     }
 
     public static void main(String[] args) {
+        Scanner sc = new Scanner(
+            Main.class.getResourceAsStream("treenumbers.txt")
+        );
 
         Node root = null;
 
-        Scanner input = new Scanner(Main.class.getResourceAsStream("treenumbers.txt"));
+        String numbersLine = sc.nextLine();
+        Scanner dataScanner = new Scanner(numbersLine);
 
-        String valuesLine = "";
-
-        while (input.hasNextLine() && valuesLine.trim().isEmpty()) {
-            valuesLine = input.nextLine();
-        }
-
-        Scanner values = new Scanner(valuesLine);
-
-        while (values.hasNextInt()) {
-            int data = values.nextInt();
+        while (dataScanner.hasNextInt()) {
+            int data = dataScanner.nextInt();
             root = insert(root, data);
         }
 
-        values.close();
+        dataScanner.close();
 
-        String targetLine = "";
+        int target = sc.nextInt();
 
-        while (input.hasNextLine() && targetLine.trim().isEmpty()) {
-            targetLine = input.nextLine();
-        }
-
-        int target = Integer.parseInt(targetLine.trim());
-
-        input.close();
-
-        output.setLength(0);
+        System.out.print("Preorder : ");
         preorder(root);
-        System.out.println("Preorder : " + output.toString().trim());
+        System.out.println();
 
-        output.setLength(0);
+        System.out.print("Inorder   : ");
         inorder(root);
-        System.out.println("Inorder   : " + output.toString().trim());
+        System.out.println();
 
-        output.setLength(0);
+        System.out.print("Postorder : ");
         postorder(root);
-        System.out.println("Postorder : " + output.toString().trim());
+        System.out.println();
 
-        System.out.println(
-            "Search " + target + " : " + search(root, target)
-        );
+        System.out.println("Search " + target + " : " + search(root, target));
+
+        sc.close();
     }
 }
